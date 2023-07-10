@@ -11,11 +11,10 @@ import FeedDetailsScreen from "./FeedDetailsScreen";
 import Colors from "../assets/Colors";
 import { NewsModel, FeedModel } from "../Model/NewsModel";
 import FeedView from "./FeedView";
-import { HomeScreenProps } from "../Model/HomeScreenProps";
 import LoadingSpinner from "../utilities/LoadingSpinner";
 import CustomTextInput from "../utilities/CustomTextInput";
-
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+import { Props } from "../Types/Props";
+const HomeScreen = ({ navigation }: Props) => {
   // states
 
   const [newsLoaded, setNewsLoaded] = useState(false);
@@ -108,7 +107,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
 const styles = StyleSheet.create({
   containerView: {
-    marginTop: 16,
     flex: 1,
     backgroundColor: Colors.bgColor,
     height: 100

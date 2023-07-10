@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useWindowDimensions } from "react-native";
 import { FeedModel } from "../Model/NewsModel";
-import { HomeScreenProps } from "../Model/HomeScreenProps";
 import Colors from "../assets/Colors";
-import { white } from "react-native-paper/lib/typescript/src/styles/themes/v2/colors";
-
+import { Props } from "../Types/Props";
+import { RootStackParamList } from "../Types/Props";
 type FeedViewProps = {
   item: FeedModel;
-  navigation: HomeScreenProps["navigation"];
+  navigation: Props['navigation'];
 };
 
 const FeedView = ({ item, navigation }: FeedViewProps) => {

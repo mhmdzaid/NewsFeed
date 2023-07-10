@@ -5,14 +5,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Colors from "../assets/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { Title } from "react-native-paper";
+import { RootStackParamList } from "../Types/Props";
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="NewsFeed" component={TabsNavigator} />
+      <Stack.Screen name="HomeParams" component={TabsNavigator} />
       <Stack.Screen name="Details" component={FeedDetailsScreen} />
     </Stack.Navigator>
   );

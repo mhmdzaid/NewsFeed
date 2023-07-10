@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, FlatList, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TextInput,
+  RefreshControl,
+} from "react-native";
 import { useState, useEffect } from "react";
 import FeedDetailsScreen from "./FeedDetailsScreen";
 import Colors from "../assets/Colors";
@@ -9,21 +16,22 @@ import LoadingSpinner from "../utilities/LoadingSpinner";
 import CustomTextInput from "../utilities/CustomTextInput";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+  // states
+
   const [newsLoaded, setNewsLoaded] = useState(false);
   const [news, setNews] = useState<Array<FeedModel>>([]);
   const [searchText, setSearchText] = useState("");
   const [filteredFeed, setFilteredFeed] = useState<Array<FeedModel>>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const onChangeSearchText = (newText: string) => {
-    setSearchText(newText);
-    if (newText === "") {
-      setFilteredFeed(news);
-      return 
-    }
-    setFilteredFeed(() => {
-      return news.filter((item) => item.title.includes(newText));
-    });
-  };
+  // fetching news
+
+  useEffect(() => {
+    const cleanUp = async () => {
+      await fetchNews();
+    };
+    cleanUp();
+  }, [isRefreshing]);
 
   const fetchNews = async () => {
     try {
@@ -33,7 +41,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       const data: NewsModel = await response.json();
       console.log(data.status);
       setNews(data.articles);
-      setFilteredFeed(data.articles);
+      setFilteredFeed(() => {
+        return data.articles.filter((item) => item.title.includes(searchText));
+      });
       setNewsLoaded(true);
     } catch (error) {
       console.log("---------------- Error -----------");
@@ -41,12 +51,26 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     }
   };
 
-  useEffect(() => {
-    const cleanUp = async () => {
-      await fetchNews();
-    };
-    cleanUp();
-  }, []);
+  // prop functions
+
+  const onChangeSearchText = (newText: string) => {
+    setSearchText(newText);
+    if (newText === "") {
+      setFilteredFeed(news);
+      return;
+    }
+    setFilteredFeed(() => {
+      return news.filter((item) => item.title.includes(newText));
+    });
+  };
+
+  const onRefreshingList = async () => {
+    setIsRefreshing(true);
+    await fetchNews();
+    setIsRefreshing(false);
+  };
+
+  // JSX elements
 
   if (!newsLoaded) {
     return <LoadingSpinner />;
@@ -65,6 +89,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       renderItem={({ item }) => (
         <FeedView navigation={navigation} item={item} />
       )}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={onRefreshingList}
+        />
+      }
     />
   );
 
@@ -92,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.aggresiveCardBGColor,
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 });
 

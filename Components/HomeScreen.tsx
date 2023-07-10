@@ -108,9 +108,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
 const styles = StyleSheet.create({
   containerView: {
-    marginTop: 30,
+    marginTop: 16,
     flex: 1,
     backgroundColor: Colors.bgColor,
+    height: 100
   },
   loadingText: {
     fontFamily: "Anton-Regular",

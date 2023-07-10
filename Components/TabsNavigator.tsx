@@ -1,13 +1,13 @@
 import HomeScreen from "./HomeScreen";
 import SettingsScreen from "./SettingsScreen";
 import FeedDetailsScreen from "./FeedDetailsScreen";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-
-const Tab = createMaterialBottomTabNavigator();
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Colors from "../assets/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { Title } from "react-native-paper";
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 export const StackNavigator = () => {
   return (
@@ -20,14 +20,26 @@ export const StackNavigator = () => {
 
 const TabsNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarInactiveTintColor: Colors.middleColor,
+        tabBarActiveTintColor: Colors.aggresiveCardBGColor,
+        tabBarStyle: {height: 90}
+      }}
+    >
       <Tab.Screen
         name="HomeStack"
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <Ionicons
+              name="home"
+              color={color}
+              size={26}
+              style={{ backgroundColor: "#FFFFFF" }}
+            />
           ),
         }}
       />
@@ -37,7 +49,7 @@ const TabsNavigator = () => {
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings" color={color} size={26} />
+            <Ionicons name="settings" color={color} size={26} />
           ),
         }}
       />

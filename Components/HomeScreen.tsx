@@ -1,14 +1,20 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, TextInput } from "react-native";
 import { useState, useEffect } from "react";
 import FeedDetailsScreen from "./FeedDetailsScreen";
 import Colors from "../assets/Colors";
 import { NewsModel, FeedModel } from "../Model/NewsModel";
 import FeedView from "./FeedView";
 import { HomeScreenProps } from "../Model/HomeScreenProps";
-
+import LoadingSpinner from "../utilities/LoadingSpinner";
+import CustomTextInput from "../utilities/CustomTextInput";
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [newsLoaded, setNewsLoaded] = useState(false);
   const [news, setNews] = useState<Array<FeedModel>>([]);
+  const [searchText, setSearchText] = useState("");
+
+  const onChangeSearchText = (newText: string) => {
+    setSearchText(newText);
+  };
 
   const fetchNews = async () => {
     try {
@@ -33,10 +39,11 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   }, []);
 
   if (!newsLoaded) {
-    return <Text style={styles.loadingText}> Loading ...</Text>;
+    return <LoadingSpinner/>
   }
   return (
     <View style={styles.containerView}>
+      <CustomTextInput value={searchText} onChangeText={onChangeSearchText}/>
       <FlatList
         data={news}
         renderItem={({ item }) => (
@@ -56,6 +63,6 @@ const styles = StyleSheet.create({
     fontFamily: "Anton-Regular",
     fontSize: 15,
     color: Colors.middleColor,
-  },
+  }
 });
 export default HomeScreen;

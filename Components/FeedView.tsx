@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
     overflow: "visible",
     elevation: 2,
     shadowColor: Colors.aggresiveCardBGColor,
-    shadowOffset: { width: 0, height: 0 },
+    shadowOffset: { width: -1, height: -1 },
     shadowRadius: 3,
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.4,
     backgroundColor:  Colors.aggresiveCardBGColor,
     borderRadius:16
   },

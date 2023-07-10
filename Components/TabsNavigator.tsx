@@ -7,29 +7,23 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-const HomeStack = () => {
+
+
+export const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="NewsFeed" component={TabsNavigator} />
       <Stack.Screen name="Details" component={FeedDetailsScreen} />
     </Stack.Navigator>
   );
 };
 
-const SettingsStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-    </Stack.Navigator>
-  );
-};
-
-export const TabsNavigator = () => {
+const TabsNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
         name="HomeStack"
-        component={HomeStack}
+        component={HomeScreen}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
@@ -39,7 +33,7 @@ export const TabsNavigator = () => {
       />
       <Tab.Screen
         name="SettingsStack"
-        component={SettingsStack}
+        component={SettingsScreen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (

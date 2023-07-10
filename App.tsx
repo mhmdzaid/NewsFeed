@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { TabsNavigator } from "./Components/TabsNavigator";
+import { StackNavigator } from "./Components/TabsNavigator";
 import LoadingSpinner from "./utilities/LoadingSpinner";
 export default function App() {
   const [loaded] = useFonts({
@@ -19,7 +19,7 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <TabsNavigator />
+      <StackNavigator />
     </NavigationContainer>
   );
 }

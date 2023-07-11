@@ -14,7 +14,11 @@ import FeedView from "./FeedView";
 import LoadingSpinner from "../utilities/LoadingSpinner";
 import CustomTextInput from "../utilities/CustomTextInput";
 import { Props } from "../Types/Props";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../Contexts/LanguageContext";
 const HomeScreen = ({ navigation }: Props) => {
+  const { t } = useTranslation();
+  const {language} = useLanguage();
   // states
 
   const [newsLoaded, setNewsLoaded] = useState(false);
@@ -30,13 +34,13 @@ const HomeScreen = ({ navigation }: Props) => {
       await fetchNews();
     };
     cleanUp();
-  }, [isRefreshing]);
+  }, [language]);
 
   const fetchNews = async () => {
     try {
-      const response = await fetch(
-        "https://newsapi.org/v2/top-headlines?category=technology&language=en&apikey=7ac2d2b17b574131a5d0a05bc59bd807"
-      );
+      const url = `https://newsapi.org/v2/top-headlines?category=technology&language=${language}&apikey=7ac2d2b17b574131a5d0a05bc59bd807`
+      console.log(url)
+      const response = await fetch(url);
       const data: NewsModel = await response.json();
       console.log(data.status);
       setNews(data.articles);
@@ -77,8 +81,7 @@ const HomeScreen = ({ navigation }: Props) => {
 
   const notFoundText = (
     <Text style={styles.notFoundText}>
-      Sorry, we couldn't find any news articles that match your search. Please
-      try a different search term.
+     {t('notFoundMsg')}
     </Text>
   );
 

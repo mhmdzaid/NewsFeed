@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, FlatList, TextInput } from "react-native";
 import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useTranslation } from "react-i18next";
 type CustomInputProps = { value: string , onChangeText: (text: string) => void } 
 
 const CustomTextInput = ({value, onChangeText}: CustomInputProps) => {
+  const {t} = useTranslation();
   return (
     <View style={styles.inputContainer}>
       <EvilIcons name="search" size={30} />
@@ -11,7 +13,7 @@ const CustomTextInput = ({value, onChangeText}: CustomInputProps) => {
         style={styles.input}
         onChangeText={onChangeText}
         value={value}
-        placeholder="Search NewsFeed"
+        placeholder= {t("searchPlaceHolder")}
       />
     </View>
   );

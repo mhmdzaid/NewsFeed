@@ -1,17 +1,22 @@
 import { Settings, Text, Switch, View, StyleSheet } from "react-native";
 import Colors from "../assets/Colors";
 import LanguageSwitcher from "../utilities/LanguageSwitcher";
-
+import i18n from "../Localization/Strings";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../Contexts/LanguageContext";
 const SettingsScreen = () => {
+  const { t } = useTranslation();
+  const {language, changeLanguage} = useLanguage();
   const changeLanguageHandler = (value: Boolean) => {
     console.log(value);
-    // do localization here 
+    const langCode = value ? "it" : "en"
+    i18n.changeLanguage(langCode);
   };
 
   return (
     <View>
       <View style={styles.contaier}>
-        <Text style={styles.label}> Change language </Text>
+        <Text style={styles.label}>{t('changeLang')} </Text>
         <LanguageSwitcher
           firstLang="En"
           secondLang="It"

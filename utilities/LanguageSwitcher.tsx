@@ -1,23 +1,29 @@
 import { Text, Switch, View, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLanguage } from "../Contexts/LanguageContext";
+import i18n from "../Localization/Strings";
 type LangSwitcherProps = {
   firstLang: string;
   secondLang: string;
-  onChange: (value: Boolean) => void;
 };
 
 const LanguageSwitcher = ({
   firstLang,
-  secondLang,
-  onChange,
+  secondLang
 }: LangSwitcherProps) => {
   const [lang, setLang] = useState(false);
+  const { language, changeLanguage } = useLanguage();
   const onChangeHandler = () => {
-    setLang((prevLang) => {
-      onChange(!prevLang);
-      return !prevLang;
-    });
+    setLang((prevLang) => !prevLang);
   };
+
+  const changeLanguageHandler = () => {
+    const langCode = lang ? "it" : "en"
+    i18n.changeLanguage(langCode);
+    changeLanguage(langCode);
+  };
+  useEffect(changeLanguageHandler,[lang])
+
   return (
     <View style={styles.languageSwitch}>
       <Text style={styles.englishLabel}>{firstLang}</Text>

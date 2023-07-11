@@ -32,10 +32,10 @@ const TabsNavigator = () => {
         name="HomeStack"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "News",
           tabBarIcon: ({ color }) => (
             <Ionicons
-              name="home"
+              name="book"
               color={color}
               size={26}
               style={{ backgroundColor: "#FFFFFF" }}

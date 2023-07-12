@@ -5,6 +5,7 @@ import { StackNavigator } from "./Components/TabsNavigator";
 import LoadingSpinner from "./utilities/LoadingSpinner";
 import i18n from "./Localization/Strings";
 import { LanguageProvider } from "./Contexts/LanguageContext";
+import { DisplayModeProvider } from "./Contexts/DisplayModeContext";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -21,11 +22,13 @@ export default function App() {
     );
   }
   return (
-    <LanguageProvider>
-      <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
-    </LanguageProvider>
+    <DisplayModeProvider>
+      <LanguageProvider>
+        <NavigationContainer>
+          <StackNavigator />
+        </NavigationContainer>
+      </LanguageProvider>
+    </DisplayModeProvider>
   );
 }
 

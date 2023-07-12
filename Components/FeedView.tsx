@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useWindowDimensions } from "react-native";
 import { FeedModel } from "../Model/NewsModel";
-import Colors from "../assets/Colors";
 import { Props } from "../Types/Props";
-import { RootStackParamList } from "../Types/Props";
+import { useDisplayMode } from "../Contexts/DisplayModeContext";
 type FeedViewProps = {
   item: FeedModel;
-  navigation: Props['navigation'];
+  navigation: Props["navigation"];
 };
 
 const FeedView = ({ item, navigation }: FeedViewProps) => {
+  const { colors } = useDisplayMode();
   const { width, height } = useWindowDimensions();
   const navigateToFeedDetailsHandler = () => {
     navigation.navigate("Details", { item });
@@ -17,12 +17,20 @@ const FeedView = ({ item, navigation }: FeedViewProps) => {
   return (
     <View
       key={Math.random()}
-      style={[styles.containerView, { height: height * 0.3 }]}
+      style={[
+        styles.containerView,
+        { height: height * 0.3 },
+        { shadowColor: colors.textColor },
+        { backgroundColor: colors.bgColor },
+      ]}
     >
       <Pressable onPress={navigateToFeedDetailsHandler}>
-        <View style={styles.feedView}>
+        <View style={[styles.feedView, { backgroundColor: colors.cardBGColor }]}>
           <Image style={styles.imageView} source={{ uri: item.urlToImage }} />
-          <Text numberOfLines={2} style={styles.title}>
+          <Text
+            numberOfLines={2}
+            style={[styles.title, { color: colors.cardTitleColor }]}
+          >
             {item.title}
           </Text>
         </View>
@@ -37,17 +45,14 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: "visible",
     elevation: 2,
-    shadowColor: Colors.aggresiveCardBGColor,
     shadowOffset: { width: -1, height: -1 },
     shadowRadius: 3,
     shadowOpacity: 0.4,
-    backgroundColor:  Colors.aggresiveCardBGColor,
-    borderRadius:16
+    borderRadius: 16,
   },
   feedView: {
     borderRadius: 16,
     overflow: "hidden",
-    backgroundColor: Colors.aggresiveCardBGColor,
   },
   imageView: {
     height: 180,
@@ -55,7 +60,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Anton-Regular",
     fontSize: 17,
-    color: "#FFFFFF",
     padding: 16,
     marginBottom: 10,
   },

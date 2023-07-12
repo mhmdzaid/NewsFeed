@@ -3,18 +3,31 @@ import SettingsScreen from "./SettingsScreen";
 import FeedDetailsScreen from "./FeedDetailsScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Colors from "../assets/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { RootStackParamList } from "../Types/Props";
 import { useTranslation } from "react-i18next";
+import { useDisplayMode } from "../Contexts/DisplayModeContext";
+import { ViewStyle } from "react-native";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
-  const {t} = useTranslation();
-  const newsTitle = t('news');
+  const { colors, mode } = useDisplayMode();
+  const { t } = useTranslation();
+  const newsTitle = t("news");
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitle: "",
+        headerTitleStyle: {
+          color: colors.textColor,
+        },
+        headerTintColor: colors.textColor,
+        headerStyle: {
+          backgroundColor: colors.bgColor
+        }
+      }}
+    >
       <Stack.Screen name="News" component={TabsNavigator}/>
       <Stack.Screen name="Details" component={FeedDetailsScreen} />
     </Stack.Navigator>
@@ -22,27 +35,30 @@ export const StackNavigator = () => {
 };
 
 const TabsNavigator = () => {
-  const {t} = useTranslation();
+  const { colors, mode } = useDisplayMode();
+  const { t } = useTranslation();
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarInactiveTintColor: Colors.middleColor,
-        tabBarActiveTintColor: Colors.aggresiveCardBGColor,
-        tabBarStyle: {height: 90}
+        tabBarInactiveTintColor: colors.cardBGColor,
+        tabBarActiveTintColor: colors.textColor,
+        tabBarStyle: {
+          backgroundColor: colors.bgColor,
+          height: 90,
+        },
       }}
     >
       <Tab.Screen
         name="HomeStack"
         component={HomeScreen}
         options={{
-          tabBarLabel: t('news'),
+          tabBarLabel: t("news"),
           tabBarIcon: ({ color }) => (
             <Ionicons
-              name="book"
+              name={mode == "light" ? "book" : "book-outline"}
               color={color}
               size={26}
-              style={{ backgroundColor: "#FFFFFF" }}
             />
           ),
         }}
@@ -51,7 +67,7 @@ const TabsNavigator = () => {
         name="SettingsStack"
         component={SettingsScreen}
         options={{
-          tabBarLabel: t('settings'),
+          tabBarLabel: t("settings"),
           tabBarIcon: ({ color }) => (
             <Ionicons name="settings" color={color} size={26} />
           ),

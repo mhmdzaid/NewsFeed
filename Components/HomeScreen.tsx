@@ -7,8 +7,6 @@ import {
   RefreshControl,
 } from "react-native";
 import { useState, useEffect } from "react";
-import FeedDetailsScreen from "./FeedDetailsScreen";
-import Colors from "../assets/Colors";
 import { NewsModel, FeedModel } from "../Model/NewsModel";
 import FeedView from "./FeedView";
 import LoadingSpinner from "../utilities/LoadingSpinner";
@@ -16,9 +14,10 @@ import CustomTextInput from "../utilities/CustomTextInput";
 import { Props } from "../Types/Props";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../Contexts/LanguageContext";
+import { useDisplayMode } from "../Contexts/DisplayModeContext";
 const HomeScreen = ({ navigation }: Props) => {
   const { t } = useTranslation();
-  const {language} = useLanguage();
+  const { language } = useLanguage();
   // states
 
   const [newsLoaded, setNewsLoaded] = useState(false);
@@ -26,7 +25,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const [searchText, setSearchText] = useState("");
   const [filteredFeed, setFilteredFeed] = useState<Array<FeedModel>>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
+  const { colors } = useDisplayMode();
   // fetching news
 
   useEffect(() => {
@@ -38,11 +37,10 @@ const HomeScreen = ({ navigation }: Props) => {
 
   const fetchNews = async () => {
     try {
-      const url = `https://newsapi.org/v2/top-headlines?category=technology&language=${language}&apikey=7ac2d2b17b574131a5d0a05bc59bd807`
-      console.log(url)
+      const url = `https://newsapi.org/v2/top-headlines?category=technology&language=${language}&apikey=7ac2d2b17b574131a5d0a05bc59bd807`;
+      console.log(url);
       const response = await fetch(url);
       const data: NewsModel = await response.json();
-      console.log(data.status);
       setNews(data.articles);
       setFilteredFeed(() => {
         return data.articles.filter((item) => item.title.includes(searchText));
@@ -80,8 +78,8 @@ const HomeScreen = ({ navigation }: Props) => {
   }
 
   const notFoundText = (
-    <Text style={styles.notFoundText}>
-     {t('notFoundMsg')}
+    <Text style={[styles.notFoundText, { color: colors.textColor }]}>
+      {t("notFoundMsg")}
     </Text>
   );
 
@@ -101,28 +99,22 @@ const HomeScreen = ({ navigation }: Props) => {
   );
 
   return (
-    <View style={styles.containerView}>
+    <View style={[styles.containerView, { backgroundColor: colors.bgColor }]}>
       <CustomTextInput value={searchText} onChangeText={onChangeSearchText} />
       {filteredFeed.length === 0 ? notFoundText : feedList}
     </View>
   );
 };
 
+// Style
 const styles = StyleSheet.create({
   containerView: {
     flex: 1,
-    backgroundColor: Colors.bgColor,
-    height: 100
-  },
-  loadingText: {
-    fontFamily: "Anton-Regular",
-    fontSize: 15,
-    color: Colors.middleColor,
+    height: 100,
   },
   notFoundText: {
     padding: 16,
     fontSize: 13,
-    color: Colors.aggresiveCardBGColor,
     textAlign: "center",
     fontWeight: "bold",
   },

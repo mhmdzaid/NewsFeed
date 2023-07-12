@@ -2,6 +2,7 @@ import { Text, Switch, View, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../Contexts/LanguageContext";
 import i18n from "../Localization/Strings";
+import { useDisplayMode } from "../Contexts/DisplayModeContext";
 type LangSwitcherProps = {
   firstLang: string;
   secondLang: string;
@@ -12,6 +13,7 @@ const LanguageSwitcher = ({
   secondLang
 }: LangSwitcherProps) => {
   const [lang, setLang] = useState(false);
+  const {colors} =  useDisplayMode();
   const { language, changeLanguage } = useLanguage();
   const onChangeHandler = () => {
     setLang((prevLang) => !prevLang);
@@ -26,9 +28,9 @@ const LanguageSwitcher = ({
 
   return (
     <View style={styles.languageSwitch}>
-      <Text style={styles.englishLabel}>{firstLang}</Text>
+      <Text style={[styles.firstLabel,{color: colors.textColor}]}>{firstLang}</Text>
       <Switch value={lang} onChange={onChangeHandler} />
-      <Text style={styles.italianLabel}>{secondLang}</Text>
+      <Text style={[styles.secondLabel,{color: colors.textColor}]}>{secondLang}</Text>
     </View>
   );
 };
@@ -40,10 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flex: 1,
   },
-  englishLabel: {
+  firstLabel: {
     width: 20,
   },
-  italianLabel: {
+  secondLabel: {
     width: 20,
   },
 });

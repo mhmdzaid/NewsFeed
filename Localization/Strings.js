@@ -10,6 +10,7 @@ const resources = {
       details: "Details",
       changeLang: "Change language",
       searchPlaceHolder: "Search NewsFeed",
+      darkMode: "Dark mode",
       notFoundMsg:
         "Sorry, we couldn't find any news articles that match your search. Please try a different search term.",
     },
@@ -21,6 +22,7 @@ const resources = {
       details: "Dettagli",
       changeLang: "Cambia lingua",
       searchPlaceHolder: "Cerca nel feed delle notizie",
+      darkMode: "Modalità scura",
       notFoundMsg:
         "Spiacenti, non siamo riusciti a trovare articoli di notizie che corrispondano alla tua ricerca. Si prega di provare un termine di ricerca diverso.",
     },

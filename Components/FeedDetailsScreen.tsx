@@ -41,6 +41,10 @@ const FeedDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
           {" "}
           {item.description}
         </Text>
+        <Text style={styles.auth}>
+          {" "}
+          <Text style={styles.authLabel}>Author</Text>: {item.author}
+        </Text>
       </View>
     </ScrollView>
   );
@@ -60,6 +64,15 @@ const styles = StyleSheet.create({
     margin: 16,
     marginTop: 0,
     fontSize: 14,
+  },
+  authLabel: {
+    fontWeight: "bold",
+    fontSize: 12,
+  },
+  auth: {
+    marginRight: 16,
+    textAlign: "right",
+    fontSize: 12,
   },
 });
 export default FeedDetailsScreen;

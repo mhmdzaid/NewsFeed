@@ -36,10 +36,9 @@ const HomeScreen = ({ navigation }: Props) => {
   }, [language]);
 
   const fetchNews = async () => {
-    setNewsLoaded(false)
+    setNewsLoaded(false);
     try {
       const url = `https://newsapi.org/v2/top-headlines?category=technology&language=${language}&apikey=7ac2d2b17b574131a5d0a05bc59bd807`;
-      console.log(url);
       const response = await fetch(url);
       const data: NewsModel = await response.json();
       setNews(data.articles);
@@ -74,17 +73,13 @@ const HomeScreen = ({ navigation }: Props) => {
 
   // JSX elements
 
-  if (!newsLoaded) {
-    return <LoadingSpinner />;
-  }
-
   const notFoundText = (
     <Text style={[styles.notFoundText, { color: colors.textColor }]}>
       {t("notFoundMsg")}
     </Text>
   );
 
-  const feedList = (
+  const feedList = newsLoaded ? (
     <FlatList
       data={filteredFeed}
       renderItem={({ item }) => (
@@ -97,12 +92,14 @@ const HomeScreen = ({ navigation }: Props) => {
         />
       }
     />
+  ) : (
+    <LoadingSpinner />
   );
 
   return (
     <View style={[styles.containerView, { backgroundColor: colors.bgColor }]}>
       <CustomTextInput value={searchText} onChangeText={onChangeSearchText} />
-      {filteredFeed.length === 0 ? notFoundText : feedList}
+      {filteredFeed.length === 0 && newsLoaded ? notFoundText : feedList}
     </View>
   );
 };

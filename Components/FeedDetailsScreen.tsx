@@ -41,9 +41,9 @@ const FeedDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
           {" "}
           {item.description}
         </Text>
-        <Text style={styles.auth}>
+        <Text style={StyleSheet.compose(styles.auth, { color: colors.textColor })}>
           {" "}
-          <Text style={styles.authLabel}>Author</Text>: {item.author}
+          <Text style={StyleSheet.compose(styles.authLabel, { color: colors.textColor })}>Author</Text>: {item.author}
         </Text>
       </View>
     </ScrollView>

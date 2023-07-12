@@ -36,7 +36,6 @@ const HomeScreen = ({ navigation }: Props) => {
   }, [language]);
 
   const fetchNews = async () => {
-    setNewsLoaded(false);
     try {
       const url = `https://newsapi.org/v2/top-headlines?category=technology&language=${language}&apikey=7ac2d2b17b574131a5d0a05bc59bd807`;
       const response = await fetch(url);
@@ -87,6 +86,7 @@ const HomeScreen = ({ navigation }: Props) => {
       )}
       refreshControl={
         <RefreshControl
+          tintColor={colors.textColor}
           refreshing={isRefreshing}
           onRefresh={onRefreshingList}
         />

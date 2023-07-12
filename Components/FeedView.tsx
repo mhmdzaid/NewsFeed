@@ -14,6 +14,15 @@ const FeedView = ({ item, navigation }: FeedViewProps) => {
   const navigateToFeedDetailsHandler = () => {
     navigation.navigate("Details", { item });
   };
+
+  const image = item.urlToImage ? (
+    <Image style={styles.imageView} source={{ uri: item.urlToImage }} />
+  ) : (
+    <Image
+      style={styles.imageView}
+      source={require("../assets/placeholder.png")}
+    />
+  );
   return (
     <View
       key={Math.random()}
@@ -25,8 +34,10 @@ const FeedView = ({ item, navigation }: FeedViewProps) => {
       ]}
     >
       <Pressable onPress={navigateToFeedDetailsHandler}>
-        <View style={[styles.feedView, { backgroundColor: colors.cardBGColor }]}>
-          <Image style={styles.imageView} source={{ uri: item.urlToImage }} />
+        <View
+          style={[styles.feedView, { backgroundColor: colors.cardBGColor }]}
+        >
+          {image}
           <Text
             numberOfLines={2}
             style={[styles.title, { color: colors.cardTitleColor }]}

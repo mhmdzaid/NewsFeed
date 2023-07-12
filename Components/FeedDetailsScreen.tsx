@@ -13,6 +13,14 @@ const FeedDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
   const { item } = route.params;
   const { height } = useWindowDimensions();
   const { colors } = useDisplayMode();
+  const feedImage = item.urlToImage ? (
+    <Image source={{ uri: item.urlToImage }} style={{ height: height * 0.3 }} />
+  ) : (
+    <Image
+      style={{ height: height * 0.3 }}
+      source={require("../assets/placeholder.png")}
+    />
+  );
   return (
     <ScrollView style={{ backgroundColor: colors.bgColor }}>
       <View
@@ -20,10 +28,7 @@ const FeedDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
           backgroundColor: colors.bgColor,
         })}
       >
-        <Image
-          source={{ uri: item.urlToImage }}
-          style={{ height: height * 0.3 }}
-        />
+        {feedImage}
         <Text
           style={StyleSheet.compose(styles.title, { color: colors.textColor })}
         >
@@ -43,7 +48,7 @@ const FeedDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
 
 const styles = StyleSheet.create({
   containerView: {
-    flex: 1
+    flex: 1,
   },
   title: {
     fontFamily: "Anton-Regular",

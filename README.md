@@ -1,5 +1,5 @@
 # NewsFeed
-Newsfeed application build with react native and typescript. 
+Newsfeed application built with react native and typescript. 
 
 ### API:
 https://newsapi.org/ 
